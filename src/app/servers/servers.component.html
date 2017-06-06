@@ -1,2 +1,30 @@
-<app-server></app-server>
-<app-server></app-server>
+<!--DO NOT mix with string interpolation (don't add "{{}}")-->
+<!-- "[disabled]" <== this is property binding-->
+<!-- "(click)" <== this is event binding-->
+<!--<input type="text" class="form-control" (input)="onUpdateServerName($event)">
+<p></p>-->
+<input type="text" class="form-control" [(ngModel)]="serverName">
+<p></p>
+<!--<p>{{ serverName }}</p>-->
+<button class="btn btn-primary" [disabled]="!allowNewServer || serverName === ''" (click)="onCreateServer()">Add server</button>
+<button class="btn btn-primary" (click)="onReset()">Reset</button>
+<p></p>
+<!--<p>{{serverCreationStatus}}</p>
+<p [innerText]="allowNewServer"></p>-->
+<!--............................................-->
+<!--Using directive-->
+<p *ngIf="serverCreated; else noServer">Server was created, server name is {{serverName}}</p>
+<ng-template #noServer>
+    <p>
+        No server was created
+    </p>
+</ng-template>
+<app-success-alert *ngIf="serverCreated; else noServer2"></app-success-alert>
+<ng-template #noServer2>
+    <p>
+        <app-warning-alert></app-warning-alert>
+    </p>
+</ng-template>
+<hr>
+<app-server *ngFor="let server of servers"></app-server>
+<hr>
